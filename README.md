@@ -69,7 +69,7 @@
 ---
 
 ## 📊 GitHub Stats
-
+![GitHub Streak](https://github-readme-streak-stats.herokuapp.com?user=koustubh1012&theme=radical)
 ![Koustubh's GitHub stats](https://github-readme-stats.vercel.app/api?username=koustubh1012&show_icons=true&theme=radical)  
 ![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=koustubh1012&layout=compact&theme=radical)
 
