@@ -95,7 +95,8 @@ body, input, select, textarea {
   font-family: "Open Sans", sans-serif;
   font-size: 13pt;
   font-weight: 400;
-  line-height: 1.65; }
+  line-height: 1.65;
+}
   @media screen and (max-width: 1680px) {
     body, input, select, textarea {
       font-size: 11pt; } }
