@@ -1932,13 +1932,18 @@ button,
   background-color: #f5f6f7;
   font-size: 0.9em;
   position: relative;
-  width: 26em; }
+  width: 26em;
+  overflow-y: auto; /* Add this line */
+}
   #sidebar h2 {
     font-size: 1.38889em; }
   #sidebar > .inner {
     padding: 2.22222em 2.22222em 2.44444em 2.22222em ;
     position: relative;
-    width: 26em; }
+    width: 26em;
+    height: 100vh; /* Add this line */
+    overflow-y: auto; /* Ensure this line is present */
+  }
     #sidebar > .inner > * {
       border-bottom: solid 2px rgba(210, 215, 217, 0.75);
       margin: 0 0 3.5em 0;
