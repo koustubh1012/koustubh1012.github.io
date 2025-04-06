@@ -1854,7 +1854,9 @@ button,
   -webkit-flex-shrink: 1;
   -ms-flex-shrink: 1;
   flex-shrink: 1;
-  width: 100%; }
+  width: 100%;
+  margin-left: 26em; /* Add margin to the main content to accommodate the fixed sidebar */
+}
   #main > .inner {
     padding: 0 6em 0.1em 6em ;
     margin: 0 auto;
@@ -1930,7 +1932,12 @@ button,
           transition: margin-left 0.5s ease, box-shadow 0.5s ease;
           background-color: #f5f6f7;
           font-size: 0.9em;
-          position: relative;
+          position: fixed; /* Make the sidebar fixed */
+          top: 0;
+          left: 0;
+          height: 100vh; /* Full height of the viewport */
+          overflow-y: auto; /* Enable scrolling within the sidebar if content overflows */
+          z-index: 1000; /* Ensure it stays above other elements */
           width: 26em; }
           #sidebar h2 {
             font-size: 1.38889em; }
