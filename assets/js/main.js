@@ -89,7 +89,7 @@
 					.appendTo($head);
 
 		// Toggle.
-			$('<a href="#sidebar" class="toggle">Toggle</a>')
+			/* $('<a href="#sidebar" class="toggle">Toggle</a>')
 				.appendTo($sidebar)
 				.on('click', function(event) {
 
@@ -100,7 +100,7 @@
 					// Toggle.
 						$sidebar.toggleClass('inactive');
 
-				});
+				}); */
 
 		// Events.
 
@@ -235,7 +235,7 @@
 				});
 
 	// Menu.
-		var $menu = $('#menu'),
+		/* var $menu = $('#menu'),
 			$menu_openers = $menu.children('ul').find('.opener');
 
 		// Openers.
@@ -257,6 +257,6 @@
 
 				});
 
-			});
+			}); */
 
 })(jQuery);

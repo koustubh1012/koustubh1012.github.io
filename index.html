@@ -49,18 +49,33 @@
 								<section id="banner">
 									<div class="content">
 										<header>
-											<h1>Hi, I am Koustubh!<br />
-											</h1>
-											<p>Graduate student at University of Maryland </p>
+											<h1>Hi, I am Koustubh!</h1>
+											<p>Robotics Engineer - Helping robots see, think, and move autonomously</p>
 										</header>
 										<h2>About me</h2>
-										<p>I am pursuing a Master of Engineering degree in Robotics at the University of Maryland, where I apply the principles and technologies that drive the field. My interest in robotics stems from my Bachelor of Technology degree in Electrical Engineering from the Institute of Engineering and Technology, Lucknow.
-
-											I have hands-on experience in developing and programming mobile robots and UAVs using Robot Operating System (ROS), which I gained from several academic and professional projects. I also have valuable skills in Salesforce Commerce Cloud (SFCC), which I used to monitor and maintain the storefront performance for a leading e-commerce client as an Assistant System Engineer at Tata Consultancy Services for 1.5 years. I enjoy attending conferences and hackathons to stay updated on the latest developments and trends in robotics. I am excited to continue learning and growing in this field and to contribute to its advancement.</p>
+										<p>
+											I’m a Robotics Engineer with a Master’s in Robotics from the University of Maryland, where I specialize in building intelligent, real-world deployable robotic systems. My expertise lies at the intersection of autonomous navigation, perception pipelines, and system integration for mobile and aerial robots.<br><br>
+											My journey began with a B.Tech in Electrical Engineering from IET Lucknow, and evolved through hands-on experience with Robot Operating System (ROS), PX4 Autopilot, and embedded systems like VOXL2. I’ve developed UAV-based 3D reconstruction pipelines using ROS2, PX4, and feature-matching techniques, and deployed ground robots equipped with LiDAR, YOLOv8, and behavior planners for real-time decision-making. I've also containerized robotics pipelines with Docker and scaled them on AWS for cloud-based applications.<br><br>
+											Prior to graduate school, I worked at Tata Consultancy Services (TCS) as an Assistant System Engineer, maintaining Salesforce Commerce Cloud storefronts for a leading e-commerce client. I thrive in fast-paced environments, enjoy attending hackathons and robotics conferences, and am always eager to collaborate on cutting-edge projects in autonomy, AI, or robot perception.
+										</p>
+										<strong>Specialties</strong>
+										<ul>
+											<li>Autonomous Navigation – ROS2, PX4, Behavior Planning</li>
+											<li>Perception – RGBD camera, Stereo Vision, CNN and Deep Learning</li>
+											<li>3D Vision – Structure-from-Motion, MASt3R, Open3D</li>
+											<li>Embedded & Cloud Robotics – VOXL SDK, Docker, AWS</li>
+										</ul>
 										<!-- TO DO -->
 											<!-- <ul class="actions">
 											<li><a href="#" class="button big">Learn More</a></li>
 										</ul> -->
+										<ul class="actions" style="margin-top: 1em;">
+											<li>
+												<a href="Koustubh_Resume.pdf" class="button primary" download>
+													Download Resume
+												</a>
+											</li>
+										</ul>
 									</div>
 									<span class="image object">
 										<img src="images/kstb.jpeg" alt="" />
@@ -86,25 +101,27 @@
 										<article>
 											<a href="https://github.com/koustubh1012/Turtlebot_Perception_Challenge" class="image"><img src="images/turtlebot.gif" alt="" /></a>
 											<h3>Turtlebot Perception Challenge</h3>
-											<p>ROS2 based perception package for TurtleBot3 enabling it to follow a paper trail while doing dynamic obstacle and stop sign detection. The project uses ROS2, YOLO and OpenCV</p>
+											<p>Designed and implemented a ROS2-based navigation pipeline for TurtleBot3 using visual cues. The system leveraged Canny edge and Hough line transforms for horizon detection, optical flow for dynamic obstacle avoidance, and centroid-based line following for path tracking. Integrated YOLOv8 for stop sign detection and executed conditional stop behavior. Validated the full stack in both Gazebo simulation and real-world environments.</p>
 											<ul class="actions">
 												<li><a href="https://github.com/koustubh1012/Turtlebot_Perception_Challenge" class="button">More</a></li>
 											</ul>
 										</article>
 										<article>
-											<a href="https://www.youtube.com/live/CTMcr8R4g3w?si=Csr_0-kgXWWkySQE&t=3816" class="image"><img src="images/eyrc.gif" alt="" /></a>
-											<h3>Survey and Rescue drone</h3>
-											<p>A mini quadcopter programmed to effectivelty plan and navigate waypoints based on priority. The drone uses ROS, OpenCV and a path planner with PID controller to easily navigate trough waypoints.</p>
+											<a href="https://youtu.be/tb_DXo1fXs8?si=XGaSCrgjRJwoQ7L_" class="image"><img src="images/drone_1.gif" alt="" /></a>
+											<h3>Optimized 3D Reconstruction using MASt3R and UAV-Based Visual-Telemetry Fusion</h3>
+											<p>
+												Designed a real-time image acquisition system that intelligently selects frames based on feature similarity and PX4 telemetry, reducing redundant captures by 60%. Integrated VOXL SDK for onboard streaming and odometry, and used MASt3R for rapid 3D model generation (2 mins vs. COLMAP’s 30+ mins). Deployed the containerized pipeline across VOXL2 and AWS EC2, enabling scalable, high-fidelity reconstruction for indoor mapping and autonomous exploration.
+											</p>
 											<ul class="actions">
-												<li><a href="https://www.youtube.com/live/CTMcr8R4g3w?si=Csr_0-kgXWWkySQE&t=3816" class="button">More</a></li>
+												<li><a href="https://github.com/koustubh1012/voxl-mast3r" class="button">More</a></li>
 											</ul>
 										</article>
 										<article>
-											<a href="https://github.com/koustubh1012/Genetic-Algotihm-based-path-planning/blob/main/1_Planning_Report.pdf" class="image"><img src="images/GeneticAlgorithmPathPlanner.gif" alt="" /></a>
+											<a href="https://www.youtube.com/watch?v=TfJD4VSZm5k" class="image"><img src="images/GeneticAlgorithmPathPlanner.gif" alt="" /></a>
 											<h3>Genetic Algorithm Based Path Planner</h3>
 											<p>This project explores path planning using Genetic Algorithms (GA) to optimize navigation in complex environments. By leveraging evolutionary principles such as selection, crossover, and mutation, the algorithm finds efficient paths while avoiding obstacles. </p>
 											<ul class="actions">
-												<li><a href="https://github.com/koustubh1012/Genetic-Algotihm-based-path-planning/blob/main/1_Planning_Report.pdf" class="button">More</a></li>
+												<li><a href="https://github.com/koustubh1012/Genetic-Algotihm-based-path-planning" class="button">More</a></li>
 											</ul>
 										</article>
 										<article>
@@ -125,6 +142,14 @@
 												<li><a href="https://github.com/koustubh1012/Predicting-Autism-Using-Eye-Tracking-Data/blob/main/ENPM703_Report.pdf" class="button">More</a></li>
 											</ul>
 										</article>
+										<article>
+											<a href="https://www.youtube.com/live/CTMcr8R4g3w?si=Csr_0-kgXWWkySQE&t=3816" class="image"><img src="images/eyrc.gif" alt="" /></a>
+											<h3>Survey and Rescue drone</h3>
+											<p>A mini quadcopter programmed to effectivelty plan and navigate waypoints based on priority. The drone uses ROS, OpenCV and a path planner with PID controller to easily navigate trough waypoints.</p>
+											<ul class="actions">
+												<li><a href="https://www.youtube.com/live/CTMcr8R4g3w?si=Csr_0-kgXWWkySQE&t=3816" class="button">More</a></li>
+											</ul>
+                    </article>
 									</div>
 								</section>
 
@@ -139,7 +164,7 @@
 											<div class="content">
 												<h3>Grading Assistant</h3>
 												<h4>Maryland Applied Graduate Engineering, UMD College Park</h4>
-												<p>Aug. 2024 – Present</p>
+												<p>Aug. 2024 – May 2025</p>
 												<ul>
 													<li>Evaluating assignments and projects for ENPM662: Introduction to Robot Modeling and ENPM661: Planning for Autonomous Robots.</li>
 													<li>Developed structured grading rubrics ensuring fair evaluation and constructive feedback for student learning.</li>
@@ -201,10 +226,10 @@
 									<div class="content" style="display: flex; align-items: center;">
 										<div style="flex: 1; text-align: left;">
 											<ul>
-												<li><strong>Programming Languages:</strong> Python, C++, JavaScript</li>
-												<li><strong>Frameworks & Tools:</strong> ROS, OpenCV, YOLO, TensorFlow, PyTorch</li>
-												<li><strong>Web Development:</strong> HTML, CSS, Salesforce Commerce Cloud</li>
-												<li><strong>Other Skills:</strong> Path Planning, SLAM, Machine Learning, Deep Learning</li>
+												<li><strong>Programming Languages:</strong> C++, Python, Bash, MATLAB</li>
+												<li><strong>Robotics:</strong> Robot Operating System(ROS), Gazebo, SLAM, MoveIt, Navigation Stack, PX4 Autopilot, SolidWorks</li>
+												<li><strong>AI, Machine Learning and Computer Vision:</strong> HTML, CSS, Salesforce Commerce Cloud</li>
+												<li><strong>DevOps & Cloud:</strong>Linux, Docker, AWS EC2, Git, Unix Shell, Salesforce Commerce Cloud, Splunk, CI/CD</li>
 											</ul>
 										</div>
 									</div>
