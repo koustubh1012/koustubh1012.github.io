@@ -2334,3 +2334,27 @@ img {
 h1, h2, p {
   word-wrap: break-word;
 }
+
+@media screen and (max-width: 768px) {
+  /* Hide the entire sidebar and its inner wrapper */
+  #sidebar,
+  #sidebar .inner {
+    display: none !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+  }
+
+  /* Let the main content span full width */
+  #main {
+    margin-left: 0 !important;
+    width: 100% !important;
+    padding: 1rem !important;
+  }
+
+  /* Remove any top padding that reserved space for the toggle */
+  body {
+    padding-top: 0 !important;
+  }
+}
