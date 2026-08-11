@@ -2396,3 +2396,13 @@ body {
   top: 2.75em;
   height: calc(100vh - 2.75em);
 }
+
+/* Hide sidebar scrollbar while keeping it scrollable */
+#sidebar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+#sidebar::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
