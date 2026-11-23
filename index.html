@@ -1,315 +1,412 @@
-<!-- <!DOCTYPE HTML>
-	Editorial by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
+<!DOCTYPE html>
+<html lang="en" class="no-js">
 	<head>
-		<title>Koustubh's Portfolio</title>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+		<title>Koustubh's Portfolio</title>
+		<meta name="description" content="Koustubh, Robotics Engineer. An interactive 3D portfolio: drive a robot around a lab to explore my experience, projects and skills." />
+		<meta name="theme-color" content="#070b14" />
+		<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A4%96%3C/text%3E%3C/svg%3E" />
+		<meta property="og:title" content="Koustubh's Portfolio" />
+		<meta property="og:description" content="Robotics Engineer. Drive a robot around a 3D lab to explore my work." />
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content="https://koustubh1012.github.io/" />
+		<meta property="og:image" content="https://koustubh1012.github.io/images/kstb_small.jpg" />
+		<meta property="og:image:alt" content="Koustubh standing in front of a space shuttle" />
+		<meta name="twitter:card" content="summary" />
+		<link rel="canonical" href="https://koustubh1012.github.io/" />
+		<script>document.documentElement.className = 'js';</script>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@500;700&display=swap" />
+		<link rel="stylesheet" href="assets/css/fontawesome-all.min.css" />
+		<link rel="stylesheet" href="assets/game/game.css" />
+		<link rel="modulepreload" href="assets/game/vendor/three.module.min.js" />
 	</head>
-	<body class="is-preload">
+	<body>
 
-		<!-- Built with Claude -->
-			<div id="built-with-claude">
-				<img src="images/Claude AI Logo - Colored - zonalogo.com.png" alt="Claude logo" />
-				<span>Built with Claude</span>
+		<!-- 3D scene + floating station labels (rendered by assets/game/main.js) -->
+		<div id="scene"></div>
+		<div id="labels" aria-hidden="true"></div>
+
+		<!-- Intro / help -->
+		<div id="intro" role="dialog" aria-modal="true" aria-labelledby="intro-title">
+			<div class="intro-card">
+				<ul id="boot-log" class="boot-log" aria-hidden="true"></ul>
+				<h1 id="intro-title">Hi, I'm Koustubh <span class="wave" aria-hidden="true">👋</span></h1>
+				<p class="tagline">Robotics Engineer. Helping robots see, think, and move autonomously.</p>
+				<p class="intro-text">This portfolio is a robot. Drive it to the glowing stations around the lab to read about my work.</p>
+				<dl class="controls">
+					<dt class="kb"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> / <kbd>↑</kbd><kbd>←</kbd><kbd>↓</kbd><kbd>→</kbd></dt><dd class="kb">Drive</dd>
+					<dt><span class="pill">Click / tap floor</span></dt><dd>Set a nav goal (A* planner)</dd>
+					<dt><span class="pill">Station buttons</span></dt><dd>Auto-drive there and dock</dd>
+					<dt class="kb"><kbd>Enter</kbd></dt><dd class="kb">Open the station you're docked at</dd>
+					<dt class="kb"><kbd>1</kbd>–<kbd>5</kbd></dt><dd class="kb">Same as the station buttons</dd>
+				</dl>
+				<button id="start-btn" class="start-btn" type="button" disabled>Booting…</button>
+				<p class="jump">In a hurry? Jump to
+					<button type="button" data-jump="about">About</button> ·
+					<button type="button" data-jump="experience">Experience</button> ·
+					<button type="button" data-jump="projects">Projects</button> ·
+					<button type="button" data-jump="skills">Skills</button> ·
+					<button type="button" data-jump="contact">Contact</button>
+				</p>
 			</div>
+		</div>
 
-		<!-- Menu Toggle -->
-			<a href="#sidebar" id="menu-toggle" aria-label="Toggle menu" aria-controls="sidebar" aria-expanded="false">
-				<span></span>
-				<span></span>
-				<span></span>
-			</a>
+		<!-- HUD -->
+		<header class="hud hud-top">
+			<div class="brand">
+				<a class="brand-name" href="./">Koustubh</a>
+				<span class="brand-role">Robotics Engineer</span>
+				<span class="claude-badge">
+					<img src="images/Claude AI Logo - Colored - zonalogo.com.png" alt="Claude logo" />
+					Built with Claude
+				</span>
+			</div>
+			<nav class="hud-links" aria-label="Links">
+				<a class="icon-btn btn-resume" href="Koustubh_Resume.pdf" download><i class="fas fa-file-download" aria-hidden="true"></i><span>Resume</span></a>
+				<a class="icon-btn" href="https://www.linkedin.com/in/koustubh-j/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
+				<a class="icon-btn" href="https://github.com/koustubh1012" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github" aria-hidden="true"></i></a>
+				<a class="icon-btn" href="mailto:koustubh1012@gmail.com" aria-label="Email"><i class="fas fa-envelope" aria-hidden="true"></i></a>
+				<button id="help-btn" class="icon-btn" type="button" aria-label="Controls and help"><i class="fas fa-question" aria-hidden="true"></i></button>
+			</nav>
+		</header>
 
-		<!-- Sidebar Overlay -->
-			<div id="sidebar-overlay"></div>
+		<aside class="hud hud-map" aria-label="Map and telemetry">
+			<div class="map-head"><span>/map</span><span>explored <b id="t-map">0%</b></span></div>
+			<canvas id="minimap" width="180" height="180" aria-label="Occupancy map built by the robot's lidar. Click to set a nav goal."></canvas>
+			<dl class="telemetry" aria-hidden="true">
+				<dt>/odom</dt><dd>x <b id="t-x">  0.00</b> y <b id="t-y">  0.00</b></dd>
+				<dt></dt><dd>θ <b id="t-yaw">  90°</b></dd>
+				<dt>/cmd_vel</dt><dd>v <b id="t-v">  0.00</b> ω <b id="t-w">  0.00</b></dd>
+			</dl>
+		</aside>
 
-		<!-- Wrapper -->
-			<div id="wrapper">
+		<nav class="hud hud-nav" aria-label="Stations">
+			<span class="nav-title">nav_goal</span>
+			<button type="button" class="station-btn" data-station="about"><span class="dot"></span>About<span class="check" aria-label="visited">✓</span></button>
+			<button type="button" class="station-btn" data-station="experience"><span class="dot"></span>Experience<span class="check" aria-label="visited">✓</span></button>
+			<button type="button" class="station-btn" data-station="projects"><span class="dot"></span>Projects<span class="check" aria-label="visited">✓</span></button>
+			<button type="button" class="station-btn" data-station="skills"><span class="dot"></span>Skills<span class="check" aria-label="visited">✓</span></button>
+			<button type="button" class="station-btn" data-station="contact"><span class="dot"></span>Contact<span class="check" aria-label="visited">✓</span></button>
+			<span class="count" title="Stations visited"><span id="explored-count">0/5</span></span>
+		</nav>
 
-				<!-- Main -->
-					<div id="main">
-						<div class="inner">
+		<div class="hud hud-hints" aria-hidden="true">
+			<kbd>WASD</kbd> drive · <kbd>click</kbd> nav goal · <kbd>1-5</kbd> stations · <kbd>?</kbd> help
+		</div>
 
-							<!-- Header -->
-								<header id="header">
-									<a href="index.html" class="logo"><strong>Koustubh</strong> - Portfolio</a>
-									<ul class="icons">
-										<li><a href="https://www.linkedin.com/in/koustubh-j/" class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
-										<li><a href="https://github.com/koustubh1012" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
-										<li><a href="mailto:koustubh1012@gmail.com" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
-									</ul>
-								</header>
+		<div id="dock-prompt" class="hud">
+			<span class="dock-text">Docked at <b id="dock-name"></b></span>
+			<button id="dock-open" type="button" class="open-btn">Open <kbd>Enter</kbd></button>
+		</div>
 
-							<!-- about -->
-								<section id="banner">
-									<div class="content">
-										<header>
-											<h1>Hi, I am Koustubh!</h1>
-											<p>Robotics Engineer - Helping robots see, think, and move autonomously</p>
-										</header>
-										<h2>About me</h2>
-										<p>
-											I’m a Robotics Engineer at Meta, currently working as a Robot Operations Engineer, teleoperating robotic systems to collect high-fidelity demonstration data and benchmarking VLA model performance on physical robots. I hold a Master’s in Robotics from the University of Maryland, where I specialized in building intelligent, real-world deployable robotic systems. My expertise lies at the intersection of autonomous navigation, perception pipelines, and system integration for mobile and aerial robots.<br><br>
-											My journey began with a B.Tech in Electrical Engineering from IET Lucknow, and evolved through hands-on experience with Robot Operating System (ROS), PX4 Autopilot, and embedded systems like VOXL2. I’ve developed UAV-based 3D reconstruction pipelines using ROS2, PX4, and feature-matching techniques, and deployed ground robots equipped with LiDAR, YOLOv8, and behavior planners for real-time decision-making. I've also containerized robotics pipelines with Docker and scaled them on AWS for cloud-based applications.<br><br>
-											Prior to graduate school, I worked at Tata Consultancy Services (TCS) as an Assistant System Engineer, maintaining Salesforce Commerce Cloud storefronts for a leading e-commerce client. I thrive in fast-paced environments, enjoy attending hackathons and robotics conferences, and am always eager to collaborate on cutting-edge projects in autonomy, AI, or robot perception.
-										</p>
-										<strong>Specialties</strong>
-										<ul>
-											<li>Autonomous Navigation – ROS2, PX4, Behavior Planning</li>
-											<li>Perception – RGBD camera, Stereo Vision, CNN and Deep Learning</li>
-											<li>3D Vision – Structure-from-Motion, MASt3R, Open3D</li>
-											<li>Embedded & Cloud Robotics – VOXL SDK, Docker, AWS</li>
-										</ul>
-										<!-- TO DO -->
-											<!-- <ul class="actions">
-											<li><a href="#" class="button big">Learn More</a></li>
-										</ul> -->
-										<ul class="actions">
-											<li>
-												<a href="Koustubh_Resume.pdf" class="button primary" download>
-													Download Resume
-												</a>
-											</li>
-										</ul>
-									</div>
-									<span class="image object">
-										<img src="images/kstb.jpeg" alt="" />
-									</span>
-								</section>
+		<div id="toast" class="hud" role="status" aria-live="polite"></div>
 
+		<p class="fallback-note">Your browser couldn't start the 3D experience, so here's the plain version of my portfolio.</p>
 
-								
-								<section id="work-experience">
-									<header class="major">
-										<h2>Work Experience</h2>
-									</header>
-									<div class="features">
-										<article>
-											<img src="images/meta_PNG5.png" alt="Meta logo">
-											<div class="content">
-												<h3>Robot Operations Engineer</h3>
-												<h4>Meta</h4>
-												<p>March 2026 – Present</p>
-												<ul>
-													<li>Teleoperated robotic systems to collect high-fidelity demonstration data and benchmarked trained VLA model performance on physical robots to ensure reliable real-world execution.</li>
-													<li>Built and maintained robust teleoperation pipelines, developing real-time KPI dashboards to monitor system performance and data throughput.</li>
-													<li>Achieved a 90% system uptime through active software and hardware debugging, successfully increasing the demonstration episode success rate from 80% to 91%.</li>
-												</ul>
-											</div>
-										</article>
-									</div>
-									<div class="features">
-										<article>
-											<img src="images/saayam.svg" alt="Saayam For All logo">
-											<div class="content">
-												<h3>Software Engineer</h3>
-												<h4>Saayam For All</h4>
-												<p>Sept 2025 – March 2026</p>
-												<ul>
-													<li>Built conversational AI chatbot on AWS Lambda using Flask with Groq's LLaMA 3.1 and Google Gemini fallback, serving 50+ subcategories across social services.</li>
-													<li>Engineered RESTful API with automatic category classification, AI-powered subject generation, and conversation history management with robust error handling and CORS support.</li>
-												</ul>
-											</div>
-										</article>
-									</div>
-									<div class="features">
-										<article>
-											<img src="images/mage.png" alt="Logo 1">
-											<div class="content">
-												<h3>Research Assistant</h3>
-												<h4>Maryland Applied Graduate Engineering, UMD College Park</h4>
-												<p>Aug. 2024 – May 2025</p>
-												<ul>
-													<li>Mentored two graduate-level robotics courses of 60+ students. Supported the physical installation, configuration, deployment, and troubleshooting of AGV platforms (TurtleBot, Husky).</li>
-													<li>Engineered Docker containers to provision one-shot simulation environments, enabling seamless sim-to-real (Sim2Real) software deployments across all hardware.</li>
-													<li>Trained users on system operations and verified that all hardware and software punch list items were resolved during the commissioning phase.</li>
-												</ul>
-											</div>
-										</article>
-									</div>
-									<div class="features">
-										<article>
-											<img src="images/Tata_Consultancy_Services_Logo.svg.png" alt="Logo 2">
-											<div class="content">
-												<h3>Software Engineer</h3>
-												<h4>Tata Consultancy Services</h4>
-												<p>Oct. 2021 – Aug. 2023</p>
-												<ul>
-													<li>Supported core production systems by optimizing the deployment lifecycle, implementing CI/CD pipelines and version control (Git) to safely push continuous updates.</li>
-													<li>Developed internal software tools using Python and Bash scripts to automate diagnostic workflows, successfully reducing Mean Time to Resolution (MTTR) by 65%.</li>
-												</ul>
-											</div>
-										</article>
-									</div>
-									<div class="features">
-										<article>
-											<img src="images/Indian_Institute_of_Technology_Bombay_Logo.svg.png" alt="Logo 2">
-											<div class="content">
-												<h3>Research Intern</h3>
-												<h4>Indian Institute of Technology, Bombay</h4>
-												<p>May 2020 – June 2020</p>
-												<ul>
-													<li>Developed educational content for Mobile Robotics MOOCs, impacting over 500 students globally by integrating practical simulations and coding exercises in technologies such as ROS, SLAM and path planning.</li>
-													<li>Enhanced organizational outreach by actively contacting South African and Namibian university students to promote participation in the eYantra Robotics Competition and designing the eYantra yearbook.</li>
-												</ul>
-											</div>
-										</article>
-									</div>
+		<!-- Station content. Shown as slide-in panels in the game; as a normal page in the fallback. -->
+		<main id="panels">
 
-									<div class="features">
-										<article>
-											<img src="images/bolt.jpg" alt="Logo 2">
-											<div class="content">
-												<h3>Marketing Intern</h3>
-												<h4>Bolt IoT</h4>
-												<p>May 2019 - July 2019</p>
-												<ul>
-													<li>Worked on brand awareness and business development by working popularizing the concepts of Internet of Things (IoT) and Machine Learning (ML)</li>
-												</ul>
-											</div>
-										</article>
-									</div>
-
-								</section>
-
-							<!-- Projects -->
-								
-								<section id="projects" class="project">
-									<header class="major">
-										<h2>Projects</h2>
-									</header>
-									<div class="posts">
-										<article>
-											<a href="https://github.com/koustubh1012/Turtlebot_Perception_Challenge" class="image"><img src="images/turtlebot.gif" alt="" /></a>
-											<h3>Turtlebot Perception Challenge</h3>
-											<p>Designed and implemented a ROS2-based navigation pipeline for TurtleBot3 using visual cues. The system leveraged Canny edge and Hough line transforms for horizon detection, optical flow for dynamic obstacle avoidance, and centroid-based line following for path tracking. Integrated YOLOv8 for stop sign detection and executed conditional stop behavior. Validated the full stack in both Gazebo simulation and real-world environments.</p>
-											<ul class="actions">
-												<li><a href="https://github.com/koustubh1012/Turtlebot_Perception_Challenge" class="button">More</a></li>
-											</ul>
-										</article>
-										<article>
-											<a href="https://youtu.be/tb_DXo1fXs8?si=XGaSCrgjRJwoQ7L_" class="image"><img src="images/drone_1.gif" alt="" /></a>
-											<h3>Optimized 3D Reconstruction using MASt3R and UAV-Based Visual-Telemetry Fusion</h3>
-											<p>
-												Designed a real-time image acquisition system that intelligently selects frames based on feature similarity and PX4 telemetry, reducing redundant captures by 60%. Integrated VOXL SDK for onboard streaming and odometry, and used MASt3R for rapid 3D model generation (2 mins vs. COLMAP’s 30+ mins). Deployed the containerized pipeline across VOXL2 and AWS EC2, enabling scalable, high-fidelity reconstruction for indoor mapping and autonomous exploration.
-											</p>
-											<ul class="actions">
-												<li><a href="https://github.com/koustubh1012/voxl-mast3r" class="button">More</a></li>
-											</ul>
-										</article>
-										<article>
-											<a href="https://www.youtube.com/watch?v=TfJD4VSZm5k" class="image"><img src="images/GeneticAlgorithmPathPlanner.gif" alt="" /></a>
-											<h3>Genetic Algorithm Based Path Planner</h3>
-											<p>This project explores path planning using Genetic Algorithms (GA) to optimize navigation in complex environments. By leveraging evolutionary principles such as selection, crossover, and mutation, the algorithm finds efficient paths while avoiding obstacles. </p>
-											<ul class="actions">
-												<li><a href="https://github.com/koustubh1012/Genetic-Algotihm-based-path-planning" class="button">More</a></li>
-											</ul>
-										</article>
-										<article>
-											<a href="https://youtu.be/TGAY0hNBtcA?si=qF4X2pZ3JG1Vr-hx" class="image"><img src="images/tinman.gif" alt="" /></a>
-											<h3>Test Driven development and CI/CD for robotics using ROS2</h3>
-											<!--TO DO -->
-											<p>A ROS2 simulation based project demostrating important software development practices such as Test Driven Development, Continuous Integration and Continuous Deployment, etc for ROS2 based projects</p>		
-											<ul class="actions">
-												<li><a href="https://github.com/koustubh1012/TinMan" class="button">More</a></li>
-											</ul>
-										</article>
-										<article>
-											<a href="https://github.com/koustubh1012/Predicting-Autism-Using-Eye-Tracking-Data" class="image"><img src="images/asd.png" alt="" /></a>
-											<h3>Predicting Autism Spectrum Disorder (ASD) using Eye Tracking Data and Deep
-												Learning</h3>
-											<p>This project uses deep learning to predict Autism Spectrum Disorder (ASD) from eye-tracking data. We apply CNNs, LSTMs, and Transformers to analyze the data and improve classification accuracy, aggregating multiple eye-tracking images per individual with sequence modeling to enhance diagnostic reliability.</p>
-											<ul class="actions">
-												<li><a href="https://github.com/koustubh1012/Predicting-Autism-Using-Eye-Tracking-Data/blob/main/ENPM703_Report.pdf" class="button">More</a></li>
-											</ul>
-										</article>
-										<article>
-											<a href="https://www.youtube.com/live/CTMcr8R4g3w?si=Csr_0-kgXWWkySQE&t=3816" class="image"><img src="images/eyrc.gif" alt="" /></a>
-											<h3>Survey and Rescue drone</h3>
-											<p>A mini quadcopter programmed to effectivelty plan and navigate waypoints based on priority. The drone uses ROS, OpenCV and a path planner with PID controller to easily navigate trough waypoints.</p>
-											<ul class="actions">
-												<li><a href="https://www.youtube.com/live/CTMcr8R4g3w?si=Csr_0-kgXWWkySQE&t=3816" class="button">More</a></li>
-											</ul>
-                    </article>
-									</div>
-								</section>
-
-								
-								<section id="skills">
-									<header class="major">
-										<h2>Skills</h2>
-									</header>
-									<div class="content">
-										<div class="skills-list">
-											<ul>
-												<li><strong>Languages:</strong> C++ 14/17, Python 3, MATLAB, CMake</li>
-												<li><strong>Robotics:</strong> ROS/ROS2, PX4 Autopilot, MoveIt, SLAM, Kinematics, Optimization, State Estimation, AutoCAD</li>
-												<li><strong>Machine Learning and AI:</strong> PyTorch, TensorFlow, ScikitLearn, Pandas, Numpy, Transformers, Reinforcement Learning (DQN, PPO, Actor-Critic methods), Point Cloud Library (PCL)</li>
-												<li><strong>Computer Vision:</strong> OpenCV, Vision Language Action models (VLAs), NeRF, Gaussian Splatting, 3D Photogrammetry</li>
-												<li><strong>Software Tools:</strong> Linux, Git, Docker, CI/CD (GitHub Actions, GTest), Jira, Confluence, AWS, GCP, Claude Code</li>
-												<li><strong>Simulations and Visualization:</strong> Gazebo, RViz, FoxGlove, MuJoCo Sim, Isaac Sim, Isaac Lab, CARLA</li>
-											</ul>
-										</div>
-									</div>
-									<div class="skills-image">
-										<img src="images/skills3.png" alt="Skills">
-									</div>
-								</section>
-
+			<!-- About -->
+			<section class="panel" id="about" data-station="about" role="dialog" aria-labelledby="about-title">
+				<header class="panel-head">
+					<p class="panel-topic">/stations/about</p>
+					<h2 id="about-title">Hi, I am Koustubh!</h2>
+					<button type="button" class="panel-close icon-btn" aria-label="Close"><i class="fas fa-times" aria-hidden="true"></i></button>
+				</header>
+				<div class="panel-body">
+					<div class="about-hero">
+						<img src="images/kstb_small.jpg" alt="Koustubh standing in front of a space shuttle" width="600" height="800" />
+						<div>
+							<p class="tagline">Robotics Engineer: helping robots see, think, and move autonomously.</p>
+							<div class="actions">
+								<a class="btn primary" href="Koustubh_Resume.pdf" download><i class="fas fa-file-download" aria-hidden="true"></i> Download resume</a>
+								<a class="btn" href="#contact"><i class="fas fa-paper-plane" aria-hidden="true"></i> Get in touch</a>
+							</div>
 						</div>
 					</div>
+					<h3>About me</h3>
+					<p>I’m a Robotics Engineer at Meta, currently working as a Robot Operations Engineer, teleoperating robotic systems to collect high-fidelity demonstration data and benchmarking VLA model performance on physical robots. I hold a Master’s in Robotics from the University of Maryland, where I specialized in building intelligent, real-world deployable robotic systems. My expertise lies at the intersection of autonomous navigation, perception pipelines, and system integration for mobile and aerial robots.</p>
+					<p>My journey began with a B.Tech in Electrical Engineering from IET Lucknow, and evolved through hands-on experience with Robot Operating System (ROS), PX4 Autopilot, and embedded systems like VOXL2. I’ve developed UAV-based 3D reconstruction pipelines using ROS2, PX4, and feature-matching techniques, and deployed ground robots equipped with LiDAR, YOLOv8, and behavior planners for real-time decision-making. I've also containerized robotics pipelines with Docker and scaled them on AWS for cloud-based applications.</p>
+					<p>Prior to graduate school, I worked at Tata Consultancy Services (TCS) as an Assistant System Engineer, maintaining Salesforce Commerce Cloud storefronts for a leading e-commerce client. I thrive in fast-paced environments, enjoy attending hackathons and robotics conferences, and am always eager to collaborate on cutting-edge projects in autonomy, AI, or robot perception.</p>
+					<h3>Specialties</h3>
+					<ul class="specialties">
+						<li><strong>Autonomous Navigation</strong> ROS2, PX4, Behavior Planning</li>
+						<li><strong>Perception</strong> RGBD camera, Stereo Vision, CNN and Deep Learning</li>
+						<li><strong>3D Vision</strong> Structure-from-Motion, MASt3R, Open3D</li>
+						<li><strong>Embedded &amp; Cloud Robotics</strong> VOXL SDK, Docker, AWS</li>
+					</ul>
+				</div>
+				<footer class="panel-foot">
+					<button type="button" class="next-stop" data-goto="experience">Next stop: Experience <i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+				</footer>
+			</section>
 
-				<!-- Sidebar -->
-					<div id="sidebar">
-						<div class="inner">
+			<!-- Experience -->
+			<section class="panel" id="experience" data-station="experience" role="dialog" aria-labelledby="experience-title">
+				<header class="panel-head">
+					<p class="panel-topic">/stations/experience</p>
+					<h2 id="experience-title">Work Experience</h2>
+					<button type="button" class="panel-close icon-btn" aria-label="Close"><i class="fas fa-times" aria-hidden="true"></i></button>
+				</header>
+				<div class="panel-body">
+					<ol class="timeline">
+						<li class="job">
+							<div class="job-logo"><img src="images/meta_PNG5.png" alt="Meta logo" loading="lazy" /></div>
+							<div class="job-body">
+								<h3>Robot Operations Engineer</h3>
+								<p class="job-meta"><span class="org">Meta</span><span class="dates">March 2026 – Present</span></p>
+								<ul>
+									<li>Teleoperated robotic systems to collect high-fidelity demonstration data and benchmarked trained VLA model performance on physical robots to ensure reliable real-world execution.</li>
+									<li>Built and maintained robust teleoperation pipelines, developing real-time KPI dashboards to monitor system performance and data throughput.</li>
+									<li>Achieved a 90% system uptime through active software and hardware debugging, successfully increasing the demonstration episode success rate from 80% to 91%.</li>
+								</ul>
+							</div>
+						</li>
+						<li class="job">
+							<div class="job-logo"><img src="images/saayam.svg" alt="Saayam For All logo" loading="lazy" /></div>
+							<div class="job-body">
+								<h3>Software Engineer</h3>
+								<p class="job-meta"><span class="org">Saayam For All</span><span class="dates">Sept 2025 – March 2026</span></p>
+								<ul>
+									<li>Built conversational AI chatbot on AWS Lambda using Flask with Groq's LLaMA 3.1 and Google Gemini fallback, serving 50+ subcategories across social services.</li>
+									<li>Engineered RESTful API with automatic category classification, AI-powered subject generation, and conversation history management with robust error handling and CORS support.</li>
+								</ul>
+							</div>
+						</li>
+						<li class="job">
+							<div class="job-logo"><img src="images/mage.png" alt="MAGE, UMD logo" loading="lazy" /></div>
+							<div class="job-body">
+								<h3>Research Assistant</h3>
+								<p class="job-meta"><span class="org">Maryland Applied Graduate Engineering, UMD College Park</span><span class="dates">Aug. 2024 – May 2025</span></p>
+								<ul>
+									<li>Mentored two graduate-level robotics courses of 60+ students. Supported the physical installation, configuration, deployment, and troubleshooting of AGV platforms (TurtleBot, Husky).</li>
+									<li>Engineered Docker containers to provision one-shot simulation environments, enabling seamless sim-to-real (Sim2Real) software deployments across all hardware.</li>
+									<li>Trained users on system operations and verified that all hardware and software punch list items were resolved during the commissioning phase.</li>
+								</ul>
+							</div>
+						</li>
+						<li class="job">
+							<div class="job-logo"><img src="images/Tata_Consultancy_Services_Logo.svg.png" alt="Tata Consultancy Services logo" loading="lazy" /></div>
+							<div class="job-body">
+								<h3>Software Engineer</h3>
+								<p class="job-meta"><span class="org">Tata Consultancy Services</span><span class="dates">Oct. 2021 – Aug. 2023</span></p>
+								<ul>
+									<li>Supported core production systems by optimizing the deployment lifecycle, implementing CI/CD pipelines and version control (Git) to safely push continuous updates.</li>
+									<li>Developed internal software tools using Python and Bash scripts to automate diagnostic workflows, successfully reducing Mean Time to Resolution (MTTR) by 65%.</li>
+								</ul>
+							</div>
+						</li>
+						<li class="job">
+							<div class="job-logo"><img src="images/Indian_Institute_of_Technology_Bombay_Logo.svg.png" alt="IIT Bombay logo" loading="lazy" /></div>
+							<div class="job-body">
+								<h3>Research Intern</h3>
+								<p class="job-meta"><span class="org">Indian Institute of Technology, Bombay</span><span class="dates">May 2020 – June 2020</span></p>
+								<ul>
+									<li>Developed educational content for Mobile Robotics MOOCs, impacting over 500 students globally by integrating practical simulations and coding exercises in technologies such as ROS, SLAM and path planning.</li>
+									<li>Enhanced organizational outreach by actively contacting South African and Namibian university students to promote participation in the eYantra Robotics Competition and designing the eYantra yearbook.</li>
+								</ul>
+							</div>
+						</li>
+						<li class="job">
+							<div class="job-logo"><img src="images/bolt.jpg" alt="Bolt IoT logo" loading="lazy" /></div>
+							<div class="job-body">
+								<h3>Marketing Intern</h3>
+								<p class="job-meta"><span class="org">Bolt IoT</span><span class="dates">May 2019 – July 2019</span></p>
+								<ul>
+									<li>Worked on brand awareness and business development by popularizing the concepts of Internet of Things (IoT) and Machine Learning (ML).</li>
+								</ul>
+							</div>
+						</li>
+					</ol>
+				</div>
+				<footer class="panel-foot">
+					<button type="button" class="next-stop" data-goto="projects">Next stop: Projects <i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+				</footer>
+			</section>
 
-							<!-- Menu -->
-								<nav id="menu">
-									<header class="major">
-										<h2>Menu</h2>
-									</header>
-									<ul>
-										<!-- <li><a href="#header">Homepage</a></li> -->
-										<li><a href="#banner">About</a></li>
-										<li><a href="#work-experience">Work Experience</a></li>
-										<li><a href="#projects">Projects</a></li>
-										<li><a href="#skills">Skills</a></li>
-									</ul>
-								</nav>
-
-								
-								<section id="contact">
-									<header class="major">
-										<h2>Get in touch</h2>
-									</header>
-									<p>Interested in building technology that's going to change the world? Get in touch with me!</p>
-									<ul class="contact">
-										<li class="icon solid fa-envelope"><a href="mailto:koustubh1012@gmail.com">koustubh1012@gmail.com</a></li>
-										<li class="icon brands fa-linkedin"><a href="https://www.linkedin.com/in/koustubh-j/">LinkedIn</a></li>
-										<li class="icon brands fa-github"><a href="https://www.github.com/koustubh1012">GitHub</a></li>
-									</ul>
-								</section>
-
-							<!-- Footer -->
-								<footer id="footer">
-									<p class="copyright">&copy; Koustubh. All rights reserved. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
-								</footer>
-
-						</div>
+			<!-- Projects -->
+			<section class="panel" id="projects" data-station="projects" role="dialog" aria-labelledby="projects-title">
+				<header class="panel-head">
+					<p class="panel-topic">/stations/projects</p>
+					<h2 id="projects-title">Projects</h2>
+					<button type="button" class="panel-close icon-btn" aria-label="Close"><i class="fas fa-times" aria-hidden="true"></i></button>
+				</header>
+				<div class="panel-body">
+					<div class="projects">
+						<article class="project">
+							<div class="project-media"><video muted loop playsinline preload="none" poster="images/turtlebot-poster.jpg" aria-label="TurtleBot3 perception challenge demo"><source src="images/turtlebot.webm" type="video/webm" /><source src="images/turtlebot.mp4" type="video/mp4" /></video></div>
+							<div class="project-body">
+								<h3>Turtlebot Perception Challenge</h3>
+								<ul class="tags"><li>ROS2</li><li>OpenCV</li><li>YOLOv8</li><li>Gazebo</li></ul>
+								<p>Designed and implemented a ROS2-based navigation pipeline for TurtleBot3 using visual cues. The system leveraged Canny edge and Hough line transforms for horizon detection, optical flow for dynamic obstacle avoidance, and centroid-based line following for path tracking. Integrated YOLOv8 for stop sign detection and executed conditional stop behavior. Validated the full stack in both Gazebo simulation and real-world environments.</p>
+								<div class="links">
+									<a class="btn" href="https://github.com/koustubh1012/Turtlebot_Perception_Challenge" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> Code</a>
+								</div>
+							</div>
+						</article>
+						<article class="project">
+							<div class="project-media"><video muted loop playsinline preload="none" poster="images/drone_1-poster.jpg" aria-label="UAV 3D reconstruction demo"><source src="images/drone_1.mp4" type="video/mp4" /></video></div>
+							<div class="project-body">
+								<h3>Optimized 3D Reconstruction using MASt3R and UAV-Based Visual-Telemetry Fusion</h3>
+								<ul class="tags"><li>PX4</li><li>VOXL2</li><li>MASt3R</li><li>Docker</li><li>AWS</li></ul>
+								<p>Designed a real-time image acquisition system that intelligently selects frames based on feature similarity and PX4 telemetry, reducing redundant captures by 60%. Integrated VOXL SDK for onboard streaming and odometry, and used MASt3R for rapid 3D model generation (2 mins vs. COLMAP’s 30+ mins). Deployed the containerized pipeline across VOXL2 and AWS EC2, enabling scalable, high-fidelity reconstruction for indoor mapping and autonomous exploration.</p>
+								<div class="links">
+									<a class="btn" href="https://github.com/koustubh1012/voxl-mast3r" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> Code</a>
+									<a class="btn" href="https://youtu.be/tb_DXo1fXs8?si=XGaSCrgjRJwoQ7L_" target="_blank" rel="noopener"><i class="fab fa-youtube" aria-hidden="true"></i> Video</a>
+								</div>
+							</div>
+						</article>
+						<article class="project">
+							<div class="project-media contain"><video muted loop playsinline preload="none" poster="images/GeneticAlgorithmPathPlanner-poster.jpg" aria-label="Genetic algorithm path planner visualization"><source src="images/GeneticAlgorithmPathPlanner.webm" type="video/webm" /><source src="images/GeneticAlgorithmPathPlanner.mp4" type="video/mp4" /></video></div>
+							<div class="project-body">
+								<h3>Genetic Algorithm Based Path Planner</h3>
+								<ul class="tags"><li>Path Planning</li><li>Genetic Algorithms</li><li>Optimization</li></ul>
+								<p>This project explores path planning using Genetic Algorithms (GA) to optimize navigation in complex environments. By leveraging evolutionary principles such as selection, crossover, and mutation, the algorithm finds efficient paths while avoiding obstacles.</p>
+								<div class="links">
+									<a class="btn" href="https://github.com/koustubh1012/Genetic-Algotihm-based-path-planning" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> Code</a>
+									<a class="btn" href="https://www.youtube.com/watch?v=TfJD4VSZm5k" target="_blank" rel="noopener"><i class="fab fa-youtube" aria-hidden="true"></i> Video</a>
+								</div>
+							</div>
+						</article>
+						<article class="project">
+							<div class="project-media"><video muted loop playsinline preload="none" poster="images/tinman-poster.jpg" aria-label="TinMan ROS2 simulation demo"><source src="images/tinman.webm" type="video/webm" /><source src="images/tinman.mp4" type="video/mp4" /></video></div>
+							<div class="project-body">
+								<h3>Test Driven Development and CI/CD for Robotics using ROS2</h3>
+								<ul class="tags"><li>ROS2</li><li>TDD</li><li>CI/CD</li><li>GTest</li></ul>
+								<p>A ROS2 simulation based project demonstrating important software development practices such as Test Driven Development, Continuous Integration and Continuous Deployment for ROS2 based projects.</p>
+								<div class="links">
+									<a class="btn" href="https://github.com/koustubh1012/TinMan" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> Code</a>
+									<a class="btn" href="https://youtu.be/TGAY0hNBtcA?si=qF4X2pZ3JG1Vr-hx" target="_blank" rel="noopener"><i class="fab fa-youtube" aria-hidden="true"></i> Video</a>
+								</div>
+							</div>
+						</article>
+						<article class="project">
+							<a class="project-media" href="https://github.com/koustubh1012/Predicting-Autism-Using-Eye-Tracking-Data" target="_blank" rel="noopener"><img src="images/asd.png" alt="Eye-tracking based ASD prediction project figure" loading="lazy" /></a>
+							<div class="project-body">
+								<h3>Predicting Autism Spectrum Disorder (ASD) using Eye Tracking Data and Deep Learning</h3>
+								<ul class="tags"><li>PyTorch</li><li>CNN</li><li>LSTM</li><li>Transformers</li></ul>
+								<p>This project uses deep learning to predict Autism Spectrum Disorder (ASD) from eye-tracking data. We apply CNNs, LSTMs, and Transformers to analyze the data and improve classification accuracy, aggregating multiple eye-tracking images per individual with sequence modeling to enhance diagnostic reliability.</p>
+								<div class="links">
+									<a class="btn" href="https://github.com/koustubh1012/Predicting-Autism-Using-Eye-Tracking-Data" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> Code</a>
+									<a class="btn" href="https://github.com/koustubh1012/Predicting-Autism-Using-Eye-Tracking-Data/blob/main/ENPM703_Report.pdf" target="_blank" rel="noopener"><i class="fas fa-file-alt" aria-hidden="true"></i> Report</a>
+								</div>
+							</div>
+						</article>
+						<article class="project">
+							<div class="project-media"><video muted loop playsinline preload="none" poster="images/eyrc-poster.jpg" aria-label="Survey and rescue drone demo"><source src="images/eyrc.webm" type="video/webm" /><source src="images/eyrc.mp4" type="video/mp4" /></video></div>
+							<div class="project-body">
+								<h3>Survey and Rescue Drone</h3>
+								<ul class="tags"><li>ROS</li><li>OpenCV</li><li>PID Control</li></ul>
+								<p>A mini quadcopter programmed to effectively plan and navigate waypoints based on priority. The drone uses ROS, OpenCV and a path planner with PID controller to easily navigate through waypoints.</p>
+								<div class="links">
+									<a class="btn" href="https://www.youtube.com/live/CTMcr8R4g3w?si=Csr_0-kgXWWkySQE&amp;t=3816" target="_blank" rel="noopener"><i class="fab fa-youtube" aria-hidden="true"></i> Video</a>
+								</div>
+							</div>
+						</article>
 					</div>
-			</div>
+				</div>
+				<footer class="panel-foot">
+					<button type="button" class="next-stop" data-goto="skills">Next stop: Skills <i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+				</footer>
+			</section>
 
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+			<!-- Skills -->
+			<section class="panel" id="skills" data-station="skills" role="dialog" aria-labelledby="skills-title">
+				<header class="panel-head">
+					<p class="panel-topic">/stations/skills</p>
+					<h2 id="skills-title">Skills</h2>
+					<button type="button" class="panel-close icon-btn" aria-label="Close"><i class="fas fa-times" aria-hidden="true"></i></button>
+				</header>
+				<div class="panel-body">
+					<div class="skill-group">
+						<h3>Languages</h3>
+						<ul class="chips"><li>C++ 14/17</li><li>Python 3</li><li>MATLAB</li><li>CMake</li></ul>
+					</div>
+					<div class="skill-group">
+						<h3>Robotics</h3>
+						<ul class="chips"><li>ROS/ROS2</li><li>PX4 Autopilot</li><li>MoveIt</li><li>SLAM</li><li>Kinematics</li><li>Optimization</li><li>State Estimation</li><li>AutoCAD</li></ul>
+					</div>
+					<div class="skill-group">
+						<h3>Machine Learning and AI</h3>
+						<ul class="chips"><li>PyTorch</li><li>TensorFlow</li><li>ScikitLearn</li><li>Pandas</li><li>Numpy</li><li>Transformers</li><li>Reinforcement Learning (DQN, PPO, Actor-Critic methods)</li><li>Point Cloud Library (PCL)</li></ul>
+					</div>
+					<div class="skill-group">
+						<h3>Computer Vision</h3>
+						<ul class="chips"><li>OpenCV</li><li>Vision Language Action models (VLAs)</li><li>NeRF</li><li>Gaussian Splatting</li><li>3D Photogrammetry</li></ul>
+					</div>
+					<div class="skill-group">
+						<h3>Software Tools</h3>
+						<ul class="chips"><li>Linux</li><li>Git</li><li>Docker</li><li>CI/CD (GitHub Actions, GTest)</li><li>Jira</li><li>Confluence</li><li>AWS</li><li>GCP</li><li>Claude Code</li></ul>
+					</div>
+					<div class="skill-group">
+						<h3>Simulations and Visualization</h3>
+						<ul class="chips"><li>Gazebo</li><li>RViz</li><li>FoxGlove</li><li>MuJoCo Sim</li><li>Isaac Sim</li><li>Isaac Lab</li><li>CARLA</li></ul>
+					</div>
+					<div class="logo-strip">
+						<img src="images/skills3.png" alt="Logos: C++, Python, ROS 2, PyTorch, TensorFlow, Docker, Gazebo, GitHub, Ubuntu, SolidWorks, NumPy, OpenCV, MoveIt, PX4, Nav2" loading="lazy" />
+					</div>
+				</div>
+				<footer class="panel-foot">
+					<button type="button" class="next-stop" data-goto="contact">Next stop: Contact <i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+				</footer>
+			</section>
 
+			<!-- Contact -->
+			<section class="panel" id="contact" data-station="contact" role="dialog" aria-labelledby="contact-title">
+				<header class="panel-head">
+					<p class="panel-topic">/stations/contact</p>
+					<h2 id="contact-title">Get in touch</h2>
+					<button type="button" class="panel-close icon-btn" aria-label="Close"><i class="fas fa-times" aria-hidden="true"></i></button>
+				</header>
+				<div class="panel-body">
+					<p class="lead">Interested in building technology that's going to change the world? Get in touch with me!</p>
+					<div class="contact-grid">
+						<a class="contact-card" href="mailto:koustubh1012@gmail.com"><i class="fas fa-envelope" aria-hidden="true"></i><span>Email</span><small>koustubh1012@gmail.com</small></a>
+						<a class="contact-card" href="https://www.linkedin.com/in/koustubh-j/" target="_blank" rel="noopener"><i class="fab fa-linkedin" aria-hidden="true"></i><span>LinkedIn</span><small>in/koustubh-j</small></a>
+						<a class="contact-card" href="https://github.com/koustubh1012" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i><span>GitHub</span><small>koustubh1012</small></a>
+						<a class="contact-card" href="Koustubh_Resume.pdf" download><i class="fas fa-file-download" aria-hidden="true"></i><span>Resume</span><small>PDF download</small></a>
+					</div>
+					<p class="copyright">&copy; Koustubh. All rights reserved.</p>
+				</div>
+				<footer class="panel-foot">
+					<button type="button" class="next-stop" data-goto="">Keep exploring <i class="fas fa-robot" aria-hidden="true"></i></button>
+				</footer>
+			</section>
+
+		</main>
+
+		<script>
+			// Project videos load nothing until visible, and only play while on screen
+			// (works for both the in-game panels and the static fallback page).
+			(function () {
+				var vids = document.querySelectorAll('.project-media video');
+				if (!vids.length) return;
+				if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
+					vids.forEach(function (v) { v.controls = true; });
+					return;
+				}
+				var io = new IntersectionObserver(function (entries) {
+					entries.forEach(function (e) {
+						if (e.isIntersecting) {
+							var p = e.target.play();
+							if (p && p.catch) p.catch(function () {});
+						} else {
+							e.target.pause();
+						}
+					});
+				}, { threshold: 0.2 });
+				vids.forEach(function (v) { io.observe(v); });
+			})();
+		</script>
+		<script nomodule>document.documentElement.classList.add('fallback');</script>
+		<script type="module">
+			import('./assets/game/main.js').catch(function (err) {
+				console.error(err);
+				document.documentElement.classList.add('fallback');
+			});
+		</script>
 	</body>
 </html>
